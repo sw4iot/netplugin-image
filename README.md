@@ -6,7 +6,7 @@ The script build_image.sh should be executed from the top level
 directory as follows:
 
 ```
-./scripts/netContain/build_image.sh
+docker build -t $IMAGE -t $REPOSITORY:latest .
 ```
 
 After this script successfully executes you will get a final image. The

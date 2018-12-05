@@ -4,22 +4,23 @@ set -euo pipefail
 
 REPOSITORY="contivbase"
 NETPLUGIN_BINARIES="netplugin netmaster netctl contivk8s"
+NETPLUGIN_CONTAINER_TAG=test
 IMAGE=$REPOSITORY:${NETPLUGIN_CONTAINER_TAG}
 
 function get_image_id() {
 	docker inspect --format '{{.ID}}' $IMAGE || :
 }
 
-rm -rf scripts/netContain/bin
-mkdir scripts/netContain/bin
+rm -rf scripts/bin
+mkdir scripts/bin
 
 # it's expected that makefile targets compile-with-docker and
 # binaries-from-container have already been run
-tar c -C bin $NETPLUGIN_BINARIES | tar x -C scripts/netContain/bin
+tar c -C bin $NETPLUGIN_BINARIES | tar x -C scripts/bin
 
 old_image=$(get_image_id)
 
-cd scripts/netContain
+cd scripts/
 
 docker build -t $IMAGE -t $REPOSITORY:latest .
 
